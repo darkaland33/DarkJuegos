@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkJuegos - Tu Portal de Videojuegos</title>
+    <link rel="icon" href="/static/logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #00d4ff, #ff006e);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: 
+                linear-gradient(rgba(15, 15, 35, 0.7), rgba(15, 15, 35, 0.7)),
+                url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover,
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff006e, #ffbe0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00d4ff, #ff006e);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Featured Games */
+        .featured-section {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card-container .game-card {
+            cursor: default;
+        }
+
+        .download-options {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .steam-btn {
+            background: linear-gradient(45deg, #1b2838, #2a475e);
+            color: white;
+        }
+
+        .steam-btn:hover {
+            background: linear-gradient(45deg, #2a475e, #1b2838);
+            transform: translateY(-2px);
+        }
+
+        .magia-btn {
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+        }
+
+        .magia-btn:hover {
+            background: linear-gradient(45deg, #8338ec, #ff006e);
+            transform: translateY(-2px);
+        }
+
+        .magia-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 10px;
+            background: rgba(255, 0, 110, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 110, 0.3);
+        }
+
+        .magia-link {
+            color: #ff006e;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            background: rgba(255, 0, 110, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .magia-link:hover {
+            background: rgba(255, 0, 110, 0.2);
+            transform: translateX(5px);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .game-card:hover .game-image::before {
+            left: 100%;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .game-description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .game-price {
+            margin-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ffbe0b;
+        }
+
+        /* News Section */
+        .news-section {
+            padding: 100px 0;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 0, 110, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: scale(1.05);
+            border-color: #ff006e;
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #ff006e 0%, #00d4ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #ff006e;
+        }
+
+        .news-excerpt {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .news-date {
+            margin-top: 1rem;
+            color: #00d4ff;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 15, 35, 0.95);
+            padding: 50px 0 30px;
+            border-top: 2px solid #00d4ff;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #ffffff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            padding-top: 2rem;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Floating elements animation */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">DarkJuegos</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#juegos">Juegos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <h1 class="floating">DarkJuegos</h1>
+                <p>¿Buscas dónde descargar juegos? Estás en el lugar correcto. Accede a los títulos más épicos del mundo gamer. Descargas rápidas, sin líos, sin esperas. 💥 ¡Juega YA!</p>
+                <a href="#juegos" class="cta-button">Explorar Juegos</a>
+            </div>
+        </section>
+
+        <section class="featured-section" id="juegos">
+            <div class="container">
+                <div class="games-grid">
+                    <div class="game-card-container">
+                        <div class="game-card">
+                            <div class="game-image" style="background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/header.jpg'); background-size: cover; background-position: center;">
+                            </div>
+                            <h3 class="game-title">God of War</h3>
+                            <p class="game-description">Únete a Kratos y su hijo Atreus en una épica aventura por los reinos nórdicos. Una historia profunda sobre la paternidad y la redención en un mundo lleno de dioses y monstruos.</p>
+                            <div class="download-options">
+                                <button class="download-btn steam-btn" onclick="window.open('https://store.steampowered.com/app/1593500/God_of_War/', '_blank')">
+                                    Ver en Steam
+                                </button>
+                                <button class="download-btn magia-btn" onclick="toggleMagiaLinks('gow-links')">
+                                    Descargar - Magia
+                                </button>
+                                <div class="magia-links" id="gow-links" style="display: none;">
+                                    <a href="https://upfiles.com/RaZE" target="_blank" class="magia-link">Parte 1</a>
+                                    <a href="https://upfiles.com/qQ1AB" target="_blank" class="magia-link">Parte 2</a>
+                                    <a href="https://upfiles.com/yb0G2ptg" target="_blank" class="magia-link">Parte 3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card-container">
+                        <div class="game-card">
+                            <div class="game-image" style="background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/48000/header.jpg'); background-size: cover; background-position: center;">
+                            </div>
+                            <h3 class="game-title">LIMBO</h3>
+                            <p class="game-description">Un thriller de plataformas oscuro y atmosférico. Guía a un niño a través de un mundo peligroso en una búsqueda desesperada por encontrar a su hermana.</p>
+                            <div class="download-options">
+                                <button class="download-btn steam-btn" onclick="window.open('https://store.steampowered.com/app/48000/LIMBO/', '_blank')">
+                                    Ver en Steam
+                                </button>
+                                <button class="download-btn magia-btn" onclick="toggleMagiaLinks('limbo-links')">
+                                    Descargar - Magia
+                                </button>
+                                <div class="magia-links" id="limbo-links" style="display: none;">
+                                    <a href="https://www.mediafire.com/file/4gwgd5b8oelsiz1/Limbo-www.randrogames.com.rar/file" target="_blank" class="magia-link">Descargar LIMBO</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-card-container">
+                        <div class="game-card">
+                            <div class="game-image" style="background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/489830/header.jpg'); background-size: cover; background-position: center;">
+                            </div>
+                            <h3 class="game-title">The Elder Scrolls V: Skyrim</h3>
+                            <p class="game-description">Explora el vasto mundo de Skyrim en este épico RPG de fantasía. Conviértete en el Dragonborn y salva el mundo de la destrucción total.</p>
+                            <div class="download-options">
+                                <button class="download-btn steam-btn" onclick="window.open('https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/', '_blank')">
+                                    Ver en Steam
+                                </button>
+                                <button class="download-btn magia-btn" onclick="toggleMagiaLinks('skyrim-links')">
+                                    Descargar - Magia
+                                </button>
+                                <div class="magia-links" id="skyrim-links" style="display: none;">
+                                    <a href="https://www.mediafire.com/file/vwn84j1kek8yc7c/SKYLEwww.randrogames.com.part1.rar/file" target="_blank" class="magia-link">Parte 1</a>
+                                    <a href="https://www.mediafire.com/file/zaw6ifec4o7favz/SKYLEwww.randrogames.com.part2.rar/file" target="_blank" class="magia-link">Parte 2</a>
+                                    <a href="https://www.mediafire.com/file/r26pn1cts9e5evo/SKYLEwww.randrogames.com.part3.rar/file" target="_blank" class="magia-link">Parte 3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DarkJuegos</h3>
+                    <p>Tu portal definitivo para descubrir y disfrutar los mejores videojuegos del momento.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <a href="#inicio">Inicio</a>
+                    <a href="#juegos">Juegos</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>DarkJuegos - Tu portal definitivo de videojuegos</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Función para mostrar/ocultar enlaces de Magia
+        function toggleMagiaLinks(linkId) {
+            const links = document.getElementById(linkId);
+            if (links.style.display === 'none' || links.style.display === '') {
+                links.style.display = 'flex';
+            } else {
+                links.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Efecto de parallax suave en el scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Animación de entrada para las tarjetas
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar animación a las tarjetas
+        document.querySelectorAll('.game-card, .news-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Efecto de hover mejorado para las tarjetas de juegos
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
