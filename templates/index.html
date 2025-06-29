@@ -138,6 +138,35 @@
             box-shadow: 0 20px 40px rgba(0, 212, 255, 0.5);
         }
 
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(45deg, #00d4ff, #ff006e);
+            border-color: #00d4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
         /* Featured Games */
         .featured-section {
             padding: 100px 0;
@@ -172,6 +201,50 @@
 
         .game-card-container .game-card {
             cursor: default;
+        }
+
+        /* Game Categories */
+        .game-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-tag {
+            padding: 4px 12px;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            border: 1px solid rgba(255, 0, 110, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .category-tag.accion {
+            background: linear-gradient(45deg, #ff006e, #ff4d6d);
+        }
+
+        .category-tag.aventura {
+            background: linear-gradient(45deg, #00d4ff, #0077be);
+        }
+
+        .category-tag.rpg {
+            background: linear-gradient(45deg, #ffbe0b, #fb8500);
+        }
+
+        .category-tag.puzzle {
+            background: linear-gradient(45deg, #8338ec, #3a86ff);
+        }
+
+        .category-tag.indie {
+            background: linear-gradient(45deg, #06ffa5, #00d4aa);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .download-options {
@@ -290,6 +363,11 @@
             font-size: 1.3rem;
             font-weight: bold;
             color: #ffbe0b;
+        }
+
+        /* Hidden class for filtering */
+        .hidden {
+            display: none !important;
         }
 
         /* News Section */
@@ -418,6 +496,15 @@
             .section-title {
                 font-size: 2rem;
             }
+
+            .category-filter {
+                padding: 0 1rem;
+            }
+
+            .filter-btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
         }
 
         /* Floating elements animation */
@@ -453,10 +540,26 @@
 
         <section class="featured-section" id="juegos">
             <div class="container">
+                <h2 class="section-title">Juegos Destacados</h2>
+                
+                <!-- Category Filter -->
+                <div class="category-filter">
+                    <button class="filter-btn active" data-category="all">Todos</button>
+                    <button class="filter-btn" data-category="accion">Acción</button>
+                    <button class="filter-btn" data-category="aventura">Aventura</button>
+                    <button class="filter-btn" data-category="rpg">RPG</button>
+                    <button class="filter-btn" data-category="puzzle">Puzzle</button>
+                    <button class="filter-btn" data-category="indie">Indie</button>
+                </div>
+
                 <div class="games-grid">
-                    <div class="game-card-container">
+                    <div class="game-card-container" data-categories="accion,aventura">
                         <div class="game-card">
                             <div class="game-image" style="background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/header.jpg'); background-size: cover; background-position: center;">
+                            </div>
+                            <div class="game-categories">
+                                <span class="category-tag accion">Acción</span>
+                                <span class="category-tag aventura">Aventura</span>
                             </div>
                             <h3 class="game-title">God of War</h3>
                             <p class="game-description">Únete a Kratos y su hijo Atreus en una épica aventura por los reinos nórdicos. Una historia profunda sobre la paternidad y la redención en un mundo lleno de dioses y monstruos.</p>
@@ -475,9 +578,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="game-card-container">
+                    <div class="game-card-container" data-categories="puzzle,indie">
                         <div class="game-card">
                             <div class="game-image" style="background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/48000/header.jpg'); background-size: cover; background-position: center;">
+                            </div>
+                            <div class="game-categories">
+                                <span class="category-tag puzzle">Puzzle</span>
+                                <span class="category-tag indie">Indie</span>
                             </div>
                             <h3 class="game-title">LIMBO</h3>
                             <p class="game-description">Un thriller de plataformas oscuro y atmosférico. Guía a un niño a través de un mundo peligroso en una búsqueda desesperada por encontrar a su hermana.</p>
@@ -494,9 +601,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="game-card-container">
+                    <div class="game-card-container" data-categories="rpg,aventura">
                         <div class="game-card">
                             <div class="game-image" style="background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/489830/header.jpg'); background-size: cover; background-position: center;">
+                            </div>
+                            <div class="game-categories">
+                                <span class="category-tag rpg">RPG</span>
+                                <span class="category-tag aventura">Aventura</span>
                             </div>
                             <h3 class="game-title">The Elder Scrolls V: Skyrim</h3>
                             <p class="game-description">Explora el vasto mundo de Skyrim en este épico RPG de fantasía. Conviértete en el Dragonborn y salva el mundo de la destrucción total.</p>
@@ -548,6 +659,36 @@
             } else {
                 links.style.display = 'none';
             }
+        }
+
+        // Sistema de filtros por categoría
+        function initCategoryFilter() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const gameCards = document.querySelectorAll('.game-card-container');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remover clase active de todos los botones
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Agregar clase active al botón clickeado
+                    button.classList.add('active');
+
+                    const selectedCategory = button.getAttribute('data-category');
+
+                    gameCards.forEach(card => {
+                        if (selectedCategory === 'all') {
+                            card.classList.remove('hidden');
+                        } else {
+                            const cardCategories = card.getAttribute('data-categories').split(',');
+                            if (cardCategories.includes(selectedCategory)) {
+                                card.classList.remove('hidden');
+                            } else {
+                                card.classList.add('hidden');
+                            }
+                        }
+                    });
+                });
+            });
         }
 
         // Smooth scrolling para los enlaces de navegación
@@ -605,6 +746,11 @@
             card.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
+        });
+
+        // Inicializar el sistema de filtros cuando la página cargue
+        document.addEventListener('DOMContentLoaded', () => {
+            initCategoryFilter();
         });
     </script>
 </body>
